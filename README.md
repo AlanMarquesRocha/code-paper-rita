@@ -132,11 +132,15 @@ Results showed that the proposed model accurately detected functional and non-fu
 
 ---
 
-# How to Cite
+## How to Cite
 
-If you use this work in your research, please cite the original article:
+If you use this work in your research, please cite the original articles below:
 
-Rocha, A. M., Souza, M. M. S., & Fernandes, C. A. R. (YYYY). Hybrid Convolutional Neural Network for Fault Detection in Electroluminescence Images of Photovoltaic Cells. *Revista de Informática Teórica e Aplicada - RITA*, Vol. XX, Num. XX, pp. 11-XX. DOI: http://dx.doi.org/10.22456/2175-2745.XXXX
+**A. M. da Rocha**, M. M. S. de Souza, F. L. Serafim, C. A. R. Fernandes, Í. B. Viana, *“Modelo Computacional para Discriminação de Células Fotovoltaicas Defeituosas em Imagens Eletroluminescentes”*, **XVI Simpósio Brasileiro de Automação Inteligente (SBAI)**, Manaus - AM, October 15–18, 2023.
+
+**A. M. da Rocha**, M. M. S. de Souza, F. L. Serafim, C. A. R. Fernandes, *“Análise de Defeitos em Células Fotovoltaicas Através da Matriz de Coocorrência de Níveis de Cinza”*, **XVI Simpósio Brasileiro de Automação Inteligente (SBAI)**, Manaus - AM, October 15–18, 2023 DOI: [https://doi.org/10.20906/SBAI-SBSE-2023/4093](https://doi.org/10.20906/SBAI-SBSE-2023/4093).
+
+**A. M. da Rocha**, M. M. S. de Souza, C. A. R. Fernandes, *“Método Computacional para Automação na Detecção de Defeitos em Células Fotovoltaicas Utilizando Imagens em Eletroluminescência”*, **XXV Congresso Brasileiro de Automática (CBA)**, Rio de Janeiro - RJ, October 15–18, 2024.
 
 ---
 
