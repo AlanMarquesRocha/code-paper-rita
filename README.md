@@ -19,50 +19,64 @@ The expansion of installed capacity in photovoltaic generation systems demands a
 
 ---
 
-## Introduction
+## Key Contributions
+
+*   **Novel HCNN Architecture:** A robust hybrid model combining CNNs (ResNet50, VGG16) for feature extraction and SVM for precise fault classification in EL images.
+*   **Genetic Algorithm Optimization:** Implementation of genetic algorithms for efficient hyperparameter tuning, leading to superior model performance and generalization.
+*   **Enhanced Data Handling:** Utilization of advanced preprocessing (CLAHE) and data augmentation techniques to address dataset heterogeneity and prevent overfitting.
+*   **High Accuracy and Reliability:** Achieved state-of-the-art accuracy (up to 99.7%) and a high Kappa index (80.2%), demonstrating the model's effectiveness and consistency in defect detection.
+*   **Comprehensive Evaluation:** Thorough validation using 5-fold cross-validation and detailed analysis of performance metrics, including confusion matrices, to ensure robust and reliable results.
+
+This project offers a significant advancement in automated PV cell inspection, providing a powerful tool for maintaining the efficiency and longevity of solar energy infrastructure.
+
+# Introduction
 
 The increasing demand for clean and renewable energy has driven the installation of large-scale photovoltaic systems. However, improper maintenance of photovoltaic cells can lead to failures that compromise the efficiency and longevity of these systems. Early detection and preventive correction of defects are crucial to avoid significant economic and environmental losses. This work addresses fault detection in photovoltaic cells using advanced machine learning techniques, specifically hybrid convolutional neural networks (HCNNs).
 
 ---
 
-## Proposed Methodology
+# Proposed Methodology
 
 This study proposes a Hybrid Convolutional Neural Network (HCNN) model for fault detection in electroluminescence (EL) images of photovoltaic cells. The methodology integrates the robustness of CNNs in feature extraction with the precision of Support Vector Machines (SVM) in classification. The process is divided into preprocessing, data augmentation, and HCNN construction with genetic hyperparameter tuning.
 
-### Datasets
+## Datasets
 
 The work uses images from the ELPV dataset, which consists of 2,624 EL images of photovoltaic cells, with a resolution of 300x300 pixels, extracted from 44 photovoltaic modules. Two subsets were derived: DS1 (1,074 images of Si-m cells) and DS2 (1,550 images of Si-p cells). The images include functional and non-functional cells, presenting various types of defects such as cracks, microcracks, fractures, and delaminations.
 
 ![Electroluminescence Images of Photovoltaic Cells](https://private-us-east-1.manuscdn.com/sessionFile/hVVZH7u8JEL2vL7urTQxZh/sandbox/Ca7lGdn8WpWOL7x40mICAe-images_1753143024103_na1fn_L2hvbWUvdWJ1bnR1L3JlYWRtZV9pbWFnZXMvZmlnMDI.png?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvaFZWWkg3dThKRUwydkw3dXJUUXhaaC9zYW5kYm94L0NhN2xHZG44V3BXT0w3eDQwbUlDQWUtaW1hZ2VzXzE3NTMxNDMwMjQxMDNfbmExZm5fTDJodmJXVXZkV0oxYm5SMUwzSmxZV1J0WlY5cGJXRm5aWE12Wm1sbk1ESS5wbmciLCJDb25kaXRpb24iOnsiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE3OTg3NjE2MDB9fX1dfQ__&Key-Pair-Id=K2HSFNDJXOU9YS&Signature=ho~2S8FYwDc~HiFdnDSMInAyV8EumC89ten3k3lsFQgxWynJ3F3JmeDY4Ts58ydjXkYSSHE~cCpmxbJrWTCoqM911UHFUZAcB~ZZL1eU0rXkfx6jqoDR908JBX-8bdIXrDzqT8nC3IW5DoSC-kmM~CQBrpkOc5fiKvUFozXsDpkS-ds~1YXgZTxSnZuVSiI4mcykHFkNZY82-AYjtvUqZ3jBjYNfQKZSswDxnO-U8tEyzzNenBkhZwfTogB5f3kFBUD9dHL7iol-L6sG1CCuBlNWX6-zN5s2QCnfi3ihBph-sEO9yEYsU~IsGLtJAuZm5LY8ygtu8RsK4wvLZFie1A__) <br>
 *Figure 1: Electroluminescence images of silicon photovoltaic cells: (a) functional monocrystalline; (b) monocrystalline with cracks and microcracks defects; (c) functional polycrystalline; (d) polycrystalline with crack, fractures, and delamination defects.*
 
-### Preprocessing
+## Preprocessing
 
 Images are initially normalized for contrast, perspective, and standardized in grayscale levels and dimension. The Contrast Limited Adaptive Histogram Equalization (CLAHE) technique was applied to enhance the contrast of EL images, which often exhibit low visibility of subtle details due to uneven luminescence distribution. CLAHE divides the image into small regions (tiles) and performs histogram equalization within each, adjusting the distribution of grayscale levels and increasing local contrast in a controlled manner. A contrast limit is set to prevent excessive noise amplification. The block size was configured to 8x8 pixels, with a clip limit factor of 2 for noise.
 
 ![Effect of CLAHE Technique Application](https://private-us-east-1.manuscdn.com/sessionFile/hVVZH7u8JEL2vL7urTQxZh/sandbox/Ca7lGdn8WpWOL7x40mICAe-images_1753143024104_na1fn_L2hvbWUvdWJ1bnR1L3JlYWRtZV9pbWFnZXMvZmlnMDM.png?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvaFZWWkg3dThKRUwydkw3dXJUUXhaaC9zYW5kYm94L0NhN2xHZG44V3BXT0w3eDQwbUlDQWUtaW1hZ2VzXzE3NTMxNDMwMjQxMDRfbmExZm5fTDJodmJXVXZkV0oxYm5SMUwzSmxZV1J0WlY5cGJXRm5aWE12Wm1sbk1ETS5wbmciLCJDb25kaXRpb24iOnsiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE3OTg3NjE2MDB9fX1dfQ__&Key-Pair-Id=K2HSFNDJXOU9YS&Signature=BoahfyAG76h4-l7N84xoPuWp64aWbcYeKeUDWPWEj-5VMlWbal4cOTld3SNuYCd8ANilR0WLiKU4htC5susJoUkBx8Fb2xgryyxYFSmNHF~jEy7mEHPq3gNl9f8qQP2jRfxWYZBHO7SreNhDxCD-0wgS72Vmc1Q4CVb1f8VHuKmLJcQfdCMi1PlBV~T11Ohmyz8eDab4m-e8NEsRUrIYvKzNhmTmxKJ8PhIeKsfn300xrwkwBmk85gM22QSh2FCTRSVvpnfCqAJ11EhzZjyyoSHpvv7sqv4FaveJVqXn-yyzKLqAW2150GmoeA-RvToH0EvCA-ToFc9PlB38cUXa2w__) <br>
 *Figure 2: (a) Original image of the Si-p photovoltaic cell. (b) Image resulting from the application of the CLAHE technique. (c) Histogram of the pixel intensity of the original image. (d) Histogram of the pixel intensity after applying the CLAHE technique.*
 
-### Data Augmentation
+## Data Augmentation
 
 To increase model robustness and prevent overfitting, four data augmentation methods were employed: image rotation (90° clockwise and counterclockwise), flipping, Gaussian blur application (3x3 kernel, $\sigma=1.0$ standard deviation), and a 20% brightness increase. The resulting dataset, named DS2, totaled 13,120 photovoltaic cell images, maintaining the original proportion of functional and non-functional cells.
 
-### Hybrid Convolutional Neural Network (HCNN)
+<img width="900" height="509" alt="image" src="https://github.com/user-attachments/assets/d87c3c86-60f7-4d89-bf2b-974b06453949" /><br>
+*Figure 3: (Result of the data augmentation techniques applied to the image dataset. (a) Original. (b) 90° clockwise rotation. (c) 90° counterclockwise rotation. (d) Flipping. (e) Blurring. (f) Brightness increased by 20%.*
+
+
+## Hybrid Convolutional Neural Network (HCNN)
 
 The proposed HCNN combines the feature extraction capabilities of CNNs with the classification precision of SVMs. The construction process involves three main steps: genetic fine-tuning, defining the hyperparameter search space, and configuring SVM parameters. ResNet50 and VGG16 architectures, pre-trained on the ImageNet dataset, were chosen as the basis for the CNNs due to their recognized performance in image classification tasks. VGG16, for example, uses convolutional, max-pooling, and ReLU layers for feature extraction, replacing fully connected layers with an SVM for final classification.
 
 ![VGG16 Architecture for Feature Extraction](https://private-us-east-1.manuscdn.com/sessionFile/hVVZH7u8JEL2vL7urTQxZh/sandbox/Ca7lGdn8WpWOL7x40mICAe-images_1753143024104_na1fn_L2hvbWUvdWJ1bnR1L3JlYWRtZV9pbWFnZXMvZmlnMDQ.png?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvaFZWWkg3dThKRUwydkw3dXJUUXhaaC9zYW5kYm94L0NhN2xHZG44V3BXT0w3eDQwbUlDQWUtaW1hZ2VzXzE3NTMxNDMwMjQxMDRfbmExZm5fTDJodmJXVXZkV0oxYm5SMUwzSmxZV1J0WlY5cGJXRm5aWE12Wm1sbk1EUS5wbmciLCJDb25kaXRpb24iOnsiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE3OTg3NjE2MDB9fX1dfQ__&Key-Pair-Id=K2HSFNDJXOU9YS&Signature=OOCKgknyVyKQLLOdkeY9SNAOnFh7VvLihatC7SA9VCE-wLzjV8~Vjni84C8Gwseo5YbiIQw-RLr43r6PQEpqMQbKESqHAaoyIgDdqAbKct6W~cL-0pDkcjDgEsKtucTLrNHFLUiiWyx~HwcHGiptPEwyKcZW0WYdx5GPJJ1TgKL~jpfPCpZpiOBJJGeeDxkXmU0-0QMetsC~tuHiEtaNxvOK20Tf~w4U6C9oe7fem6sG87avxog7CHwTUybJz0RBBfEEMNjyhwxW0eZFc~TcsahOxOVqJOj7abhqu8QPxy44CJJ-AwBcZnw1TAC2D7uYkb5EpsLirHeFcJivVxVIIw__)
-*Figure 3: Architecture of VGG16 used for feature extraction.*
+*Figure 4: Architecture of VGG16 used for feature extraction.*
 
-#### Genetic Fine-tuning
+### Genetic Fine-tuning
 
 Genetic Fine-tuning uses Genetic Algorithms (GAs) to optimize CNN hyperparameters. Inspired by natural evolution, GAs employ selection, crossover, and mutation operations to evolve solutions over generations. Hyperparameters such as network depth, number of filters, filter size, learning rate, and activation function are encoded as genes. The process follows steps such as creating an initial population, selecting individuals by stochastic roulette wheel sampling, generating new individuals through crossover and mutation, and selecting the best individuals for the next generation based on the Kappa index ($\kappa$). Stopping conditions include reaching 100% Kappa, stagnation of average accuracy, or reaching 100 generations. The hyperparameter search space includes CNNs (ResNet50, VGG16), number of layers (1, 2), neurons per layer, activation functions (tanh, relu, selu, elu, exponential), optimizer types (adam, sgd, rmsprop, adadelta), and dropout rates (30%, 40%, 50%, 60%).
 
-#### Feature Extraction
+### Feature Extraction
 
 After genetic fine-tuning, the pre-trained ResNet50 and VGG16 networks are applied to the EL images of PV cells. Each convolutional layer extracts different levels of features, from simple edges to more abstract patterns specific to defect detection. The advantage of using pre-trained networks lies in their ability to reuse knowledge acquired from previous tasks, accelerating the training process and improving the accuracy of feature extraction.
 
-#### Support Vector Machine (SVM)
+### Support Vector Machine (SVM)
 
 SVM is a supervised classification algorithm effective for high-dimensional data, such as features extracted by CNNs. SVM helps prevent overfitting, especially in scenarios with more features than samples. The SVM classifier was configured with a Radial Basis Function (RBF) kernel to transform features into a higher-dimensional space, facilitating class separation. Parameters $C$ and $\gamma$ were tuned using the GridSearchCV class from the Scikit-Learn library, testing values for $C \in \{0.1, 1, 10, 100\}$ and $\gamma \in \{0.001, 0.01, 0.1, 1\}$.
 
@@ -89,14 +103,14 @@ ResNet50+SVM, with a 1,024-neuron layer, relu activation function, adam optimize
 The confusion matrices for the best results obtained by HCNN VGG16+SVM and HCNN ResNet50+SVM models (with data augmentation) are presented below. The matrix for VGG16+SVM shows 1,303 TNs and 1,295 TPs, with only 13 FPs and FNs, reflecting 99.7% accuracy. For ResNet50+SVM, the matrix shows 1,292 TNs and 1,280 TPs, with 26 FPs and 26 FNs, consistent with 98.2% accuracy. Both models demonstrate high specificity and sensitivity, with VGG16+SVM showing fewer classification errors.
 
 ![Confusion Matrices of Best Results](https://private-us-east-1.manuscdn.com/sessionFile/hVVZH7u8JEL2vL7urTQxZh/sandbox/Ca7lGdn8WpWOL7x40mICAe-images_1753143024105_na1fn_L2hvbWUvdWJ1bnR1L3JlYWRtZV9pbWFnZXMvZmlnMDU.png?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvaFZWWkg3dThKRUwydkw3dXJUUXhaaC9zYW5kYm94L0NhN2xHZG44V3BXT0w3eDQwbUlDQWUtaW1hZ2VzXzE3NTMxNDMwMjQxMDVfbmExZm5fTDJodmJXVXZkV0oxYm5SMUwzSmxZV1J0WlY5cGJXRm5aWE12Wm1sbk1EVS5wbmciLCJDb25kaXRpb24iOnsiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE3OTg3NjE2MDB9fX1dfQ__&Key-Pair-Id=K2HSFNDJXOU9YS&Signature=lersIr7bSsHxvGwaHlbwFI83pl9rRrfdKlfi5n37GiJ3pMoVu7Z-4Stn~nSACtHZSiQXIYQ4Dv2gBH~VPsEn77XCzdhgcoSkcXINDQofjNN78M0US6XSR7eqJlCg7m0eH8~1PHC31kVoxoHl0W-JwdvIDkirnQ0p~Djvpg1P8U2RdkVF~1kU09qcD1Vjrt~2tCYsaJ5PmayzqJjy1XsMAh-mV9tPOOLBDK2W9vzyfiFOMbtkf-be82RwOTBnt2vEhVT6iip-ZDb-CcPFAR9SVbIjQwsApsZ34fiA-lqUgzAh--BWf~wIM8xw0DhUkJmi3Frl22VtBR1PYnVeXrW2nA__)
-*Figure 4: (a) Confusion matrix of the best result obtained by HCNN VGG16+SVM. (b) Confusion matrix of the best result obtained by HCNN ResNet50+SVM.*
+*Figure 5: (a) Confusion matrix of the best result obtained by HCNN VGG16+SVM. (b) Confusion matrix of the best result obtained by HCNN ResNet50+SVM.*
 
 ### Visual Validation
 
 Visual validation of EL images of photovoltaic cells confirmed the effectiveness of the proposed technique. The model successfully detected all functional and non-functional cells. An example of a misclassified cell, with a small delamination defect, highlights the need for future improvements to classify subtle defects.
 
 ![Examples of Classifications Performed by the VGG16+SVM Model](https://private-us-east-1.manuscdn.com/sessionFile/hVVZH7u8JEL2vL7urTQxZh/sandbox/Ca7lGdn8WpWOL7x40mICAe-images_1753143024105_na1fn_L2hvbWUvdWJ1bnR1L3JlYWRtZV9pbWFnZXMvZmlnMDY.png?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvaFZWWkg3dThKRUwydkw3dXJUUXhaaC9zYW5kYm94L0NhN2xHZG44V3BXT0w3eDQwbUlDQWUtaW1hZ2VzXzE3NTMxNDMwMjQxMDVfbmExZm5fTDJodmJXVXZkV0oxYm5SMUwzSmxZV1J0WlY5cGJXRm5aWE12Wm1sbk1EWS5wbmciLCJDb25kaXRpb24iOnsiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE3OTg3NjE2MDB9fX1dfQ__&Key-Pair-Id=K2HSFNDJXOU9YS&Signature=bh-6BGAQLH-VJpyjzpITSj5Hha8T-xwsvRb-Iy~og4xgUxBsNHy7YkIIFo5SmUmbhV-NJEzLAx0HBFFm92qFoXo5svG7avppqHEanD07S65o7XREUCbQ6qOgsBym1uMH5ubVIw60AJdla4k1wbR0DlsMD5VS8QFQYsvrsNxLq3HB0dgNXH8GpjWXvN4UqDC8iO5uCWwYzlYHig7cME-aKZA866UHiS3fpOPl9W-2CTZo-cqA~b2gPF2zVmO-wQ~E1aViEBfxBIPuIR7ftNOuysGEGE4zLJE6MA35IBlfk1H0FrxHCclebCdKwmwOlmBbbtyfG66~ZOp8KT5lZIEZIw__)
-*Figure 5: Examples of classifications performed by the VGG16+SVM Model with data augmentation.*
+*Figure 6: Examples of classifications performed by the VGG16+SVM Model with data augmentation.*
 
 ### Comparison with State-of-the-Art
 
