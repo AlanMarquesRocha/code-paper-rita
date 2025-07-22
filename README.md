@@ -29,6 +29,19 @@ The expansion of installed capacity in photovoltaic generation systems demands a
 
 This project offers a significant advancement in automated PV cell inspection, providing a powerful tool for maintaining the efficiency and longevity of solar energy infrastructure.
 
+# Description of Code Files
+
+| File                                | Initial Description                                                                 |
+|-------------------------------------|--------------------------------------------------------------------------------------|
+| `HCNN_VGG16_InceptionV3_ResNet50.ipynb` | Notebook containing experiments with hybrid CNN architectures combining VGG16, InceptionV3, and ResNet50. |
+| `cnn_CLAHE_augmentation.ipynb`         | Application of the CLAHE technique (Contrast Limited Adaptive Histogram Equalization) and data augmentation for medical images. |
+| `comparative_clahe.py`                | Python script to compare different histogram equalization approaches in images (including CLAHE). |
+| `hcnn_inceptionv3_svm.py`             | Implementation of a hybrid classifier using InceptionV3 as a feature extractor and SVM as the classifier. |
+| `hcnn_vgg16_svm.py`                   | Implementation of a hybrid classifier using VGG16 as a feature extractor and SVM as the classifier. |
+| `offline_data_augmentation.py`        | Script to perform batch (offline) data augmentation before training the models. |
+| `dataset.txt`                         | Drive link for access to the project's image datasets. |
+
+
 # Introduction
 
 The increasing demand for clean and renewable energy has driven the installation of large-scale photovoltaic systems. However, improper maintenance of photovoltaic cells can lead to failures that compromise the efficiency and longevity of these systems. Early detection and preventive correction of defects are crucial to avoid significant economic and environmental losses. This work addresses fault detection in photovoltaic cells using advanced machine learning techniques, specifically hybrid convolutional neural networks (HCNNs).
