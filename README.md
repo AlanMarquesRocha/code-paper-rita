@@ -6,9 +6,6 @@
 **Authors:** Alan Marques da Rocha, Marcelo Marques Simões de Souza, Carlos Alexandre Rolim Fernandes
 
 **Affiliation:** Graduate Program in Electrical and Computer Engineering, Federal University of Ceará, Sobral, Ceará, Brazil
-
-**Correspondence:** eng.alanmarquesrocha@gmail.com
-
 ---
 
 # Abstract
